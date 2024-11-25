@@ -108,12 +108,6 @@ const AuthComponent: React.FC<AuthComponentProps> = ({ supabase, redirectUrl }) 
               />
             </div>
 
-            {error && (
-              <div className='bg-red-300 border border-red-600 text-red-600 p-3 my-3 rounded-lg'>
-                <p>{error}</p>
-              </div>
-            )}
-
             <div className='my-4'>
                 <button 
                 type="submit" 
@@ -123,6 +117,12 @@ const AuthComponent: React.FC<AuthComponentProps> = ({ supabase, redirectUrl }) 
                 {loading ? 'Processing...' : (isSignUp ? 'Create Account' : 'Sign In')}
                 </button>
             </div>
+
+            {error && (
+              <div className='bg-red-300 border border-red-600 text-red-600 p-3 my-3 rounded-lg'>
+                <p>{error}</p>
+              </div>
+            )}
 
             {successMessage && (
               <div className='bg-green-300 border border-green-600 text-green-600 p-3 my-3 rounded-lg'>
