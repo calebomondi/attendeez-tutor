@@ -3,6 +3,9 @@ import apiService from "../../services/apiService"
 import { SessionStarted,MyClassesToday } from "../../types"
 import ConfirmTodaysClass from "./confirmclass"
 
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
+
 export default function TodaysClasses({teacher_id, unit_id} : {teacher_id : string,unit_id : string}) {
     const [data,setData] = useState<MyClassesToday[]>([])
 
@@ -10,18 +13,7 @@ export default function TodaysClasses({teacher_id, unit_id} : {teacher_id : stri
 
     const [before,setBefore] = useState<boolean>(false)
 
-    const [open, setOpen] = useState<boolean>(false)
-
-    const [mssg,setMssg] = useState<string>('')
-
     const [started, setStarted] = useState<SessionStarted>({"id":0,"session_end":false})
-
-    const showModal = () => {
-        setOpen(true);
-    }
-    const hideModal = () => {
-        setOpen(false);
-    }
 
     useEffect(() => {
         const fetchData = async () => {
@@ -40,19 +32,16 @@ export default function TodaysClasses({teacher_id, unit_id} : {teacher_id : stri
     const handleStartClass = async () => {
         const response = await apiService.postStartClassSession(unit_id)
         if(response.success){
-            showModal()
-            setMssg(response.message)
+            toast.success(response.message)
         }
         setEnd(false)
         
     }
 
     const handleEndClass = async () => {
-        hideModal()
         const response = await apiService.putEndClassSession(unit_id)
         if(response.success) {
-            showModal()
-            setMssg(response.message)
+            toast.success(response.message)
         } 
     }
 
@@ -84,6 +73,7 @@ export default function TodaysClasses({teacher_id, unit_id} : {teacher_id : stri
 
   return (
     <>
+        <ToastContainer />
         {
             data.length > 0 ? (
                 data.map((item,index) => (
@@ -116,19 +106,6 @@ export default function TodaysClasses({teacher_id, unit_id} : {teacher_id : stri
                                                         End Class
                                                     </button>
                                                 </div>
-                                                {
-                                                    open && (
-                                                        <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center">
-                                                            <div className="bg-teal-700 p-6 rounded-lg shadow-lg max-w-sm w-full">
-                                                            <h2 className="text-xl font-bold mb-4">{unit_id}</h2>
-                                                            <p className="mb-4"> {mssg} </p>
-                                                            <form method="dialog" className="text-right">
-                                                                <button onClick={hideModal} className="btn bg-white border-none text-slate-600 hover:text-white"> Close </button>
-                                                            </form>
-                                                            </div>
-                                                        </div>
-                                                    )
-                                                }
                                             </>
                                         ) : (
                                             <span className="text-lg w-1/3 flex justify-evenly">
@@ -164,19 +141,6 @@ export default function TodaysClasses({teacher_id, unit_id} : {teacher_id : stri
                                                         End Class
                                                     </button>
                                                 </div>
-                                                {
-                                                    open && (
-                                                        <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center">
-                                                            <div className="bg-teal-600 p-6 rounded-lg shadow-lg max-w-sm w-full">
-                                                            <h2 className="text-xl font-bold mb-4 text-white">{unit_id}</h2>
-                                                            <p className="mb-4 text-white"> {mssg} </p>
-                                                            <form method="dialog" className="text-right">
-                                                                <button onClick={hideModal} className="btn bg-white border-none text-slate-600 hover:text-white"> Close </button>
-                                                            </form>
-                                                            </div>
-                                                        </div>
-                                                    )
-                                                }
                                             </>
                                         )
                                 ) : (
