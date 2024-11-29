@@ -9,7 +9,6 @@ import QRScanner from "./zxing";
 
 export default function ScanStudentQrCode({unit_id}:{unit_id:string}) {
     const [data,setData] = useState<ClassEndTime>({"end_time":"","session_end":false,"date":"1999-12-31"})
-    //const [scannedData, setScannedData] = useState<{ student_id: string }>({ student_id: '' });
     
     useEffect(() => {
         const fetchData = async () => {
@@ -25,7 +24,6 @@ export default function ScanStudentQrCode({unit_id}:{unit_id:string}) {
 
     },[unit_id]);
 
-    /*
     function uploadStudent(unit_id:string,student_id:string) : void {
         try {
             const fetchData = async () => {
@@ -33,10 +31,8 @@ export default function ScanStudentQrCode({unit_id}:{unit_id:string}) {
                 if (inAttendance.started){
                     const result = await apiService.uploadSingleStudent(unit_id,student_id)
                     console.log('upload-student')
-                    //setStudent(result.message)
                     toast.success(result.message)
                 } else {
-                    //setStudent(`${student_id} Did Not Join Session! ⚠`)
                     toast.error(`${student_id} Did Not Join Session! ⚠`)
                 }  
             }
@@ -47,11 +43,14 @@ export default function ScanStudentQrCode({unit_id}:{unit_id:string}) {
             toast.error(`upload-student-error: ${error}`)
         }
     }
-        */
 
     const handleScan = (result: string) => {
-        //setScannedData({ student_id: result });
         toast.success(result)
+        if (result.length > 0) {
+            const jsonObj = JSON.parse(result)
+            const stud_id = jsonObj.student_id[0]
+            uploadStudent(unit_id,`SCT221-${stud_id}`)
+        }
     };
 
     const handleError = (error: Error) => {
