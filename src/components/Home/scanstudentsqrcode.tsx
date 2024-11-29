@@ -30,7 +30,6 @@ export default function ScanStudentQrCode({unit_id}:{unit_id:string}) {
                 const inAttendance = await apiService.checkInAttendance(unit_id,student_id)
                 if (inAttendance.started){
                     const result = await apiService.uploadSingleStudent(unit_id,student_id)
-                    console.log('upload-student')
                     toast.success(result.message)
                 } else {
                     toast.error(`${student_id} Did Not Join Session! ⚠`)
@@ -45,7 +44,6 @@ export default function ScanStudentQrCode({unit_id}:{unit_id:string}) {
     }
 
     const handleScan = (result: string) => {
-        toast.success(result)
         if (result.length > 0) {
             const jsonObj = JSON.parse(result)
             const stud_id = jsonObj.student_id[0]
