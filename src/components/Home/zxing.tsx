@@ -93,33 +93,36 @@ const QRScanner: React.FC<QRScannerProps> = ({
     };
 
     return (
-        <div className="qr-scanner">
+        <div className="qr-scanner p-4 flex flex-col justify-center align-middle">
             <video
                 ref={videoRef}
-                style={{
-                    width: "100%",
-                    maxWidth: "400px",
-                    height: "auto",
-                }}
+                className="bg-gray-400 w-full h-auto rounded-lg"
             />
 
-            <select
-                value={selectedDevice || ""}
-                onChange={(e) => handleDeviceChange(e.target.value)}
-            >
-                {devices.map((device) => (
-                    <option key={device.deviceId} value={device.deviceId}>
-                        {device.label || `Camera ${devices.indexOf(device) + 1}`}
-                    </option>
-                ))}
-                {!selectedDevice && <option value="" disabled>Select a Camera</option>}
-            </select>
+            <div className="flex justify-center mt-3 p-1">
+                <select
+                    value={selectedDevice || ""}
+                    onChange={(e) => handleDeviceChange(e.target.value)}
+                    className="w-1/3 p-2 rounded-lg"
+                >
+                    {devices.map((device) => (
+                        <option 
+                            key={device.deviceId} 
+                            value={device.deviceId}
+                            className="p-2 font-mono"
+                        >
+                            {device.label || `Camera ${devices.indexOf(device) + 1}`}
+                        </option>
+                    ))}
+                    {!selectedDevice && <option value="" disabled>Select a Camera</option>}
+                </select>
+            </div>
 
-            <div className="scanner-controls">
+            <div className="scanner-controls flex justify-center mt-3 p-1">
                 {!scanning ? (
-                    <button onClick={startScanning}>Start Scanning</button>
+                    <button onClick={startScanning} className="btn btn-success w-1/3 text-white">Start Scanning</button>
                 ) : (
-                    <button onClick={stopScanning}>Stop Scanning</button>
+                    <button onClick={stopScanning} className="btn btn-success w-1/3 text-white">Stop Scanning</button>
                 )}
             </div>
         </div>
