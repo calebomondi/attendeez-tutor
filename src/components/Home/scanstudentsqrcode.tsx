@@ -2,16 +2,15 @@ import { useEffect, useState } from "react";
 import apiService from "../../services/apiService"
 import { ClassEndTime } from "../../types"
 
-import isWithinTimeLimit from "../attendance/withinTimeLimit";
-
 import { ToastContainer, toast } from "react-toastify";
 import 'react-toastify/dist/ReactToastify.css';
 
 import QRScanner from "./zxing";
 
+import isWithinTimeLimit from "../attendance/withinTimeLimit";
+
 export default function ScanStudentQrCode({unit_id}:{unit_id:string}) {
     const [data,setData] = useState<ClassEndTime>({"end_time":"","session_end":false,"date":"1999-12-31"})
-    const [ended, setEnded] = useState<boolean>(false);
     
     useEffect(() => {
         const fetchData = async () => {
@@ -25,10 +24,7 @@ export default function ScanStudentQrCode({unit_id}:{unit_id:string}) {
 
         fetchData()
 
-        setEnded(isWithinTimeLimit(data.end_time))
-
     },[unit_id]);
-
 
     function uploadStudent(unit_id:string,student_id:string) : void {
         try {
@@ -53,7 +49,8 @@ export default function ScanStudentQrCode({unit_id}:{unit_id:string}) {
         if (result.length > 0) {
             const jsonObj = JSON.parse(result)
             const stud_id = jsonObj.student_id[0]
-            uploadStudent(unit_id,`SCT221-${stud_id}`)
+            if (isWithinTimeLimit(data.end_time))
+                uploadStudent(unit_id,`SCT221-${stud_id}`)
         }
     };
 
@@ -66,7 +63,7 @@ export default function ScanStudentQrCode({unit_id}:{unit_id:string}) {
     <div className="flex flex-col justify-center items-center w-full bg-base-200 my-5 border border-teal-500 rounded-lg">
         <ToastContainer />
         {
-            data.session_end && ended &&(
+            data.session_end && isWithinTimeLimit(data.end_time) && (
                 <div className="w-full h-full">
                     <div className="flex justify-center mt-2 text-lg font-semibold">
                         Scan Student's QR code
