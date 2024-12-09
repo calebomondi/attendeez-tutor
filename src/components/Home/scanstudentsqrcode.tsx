@@ -50,7 +50,7 @@ export default function ScanStudentQrCode({unit_id}:{unit_id:string}) {
             const jsonObj = JSON.parse(result)
             const stud_id = jsonObj.id[0]
             if (isWithinTimeLimit(data.end_time)) 
-                uploadStudent(unit_id,`SCT221-${stud_id}`)
+                uploadStudent(unit_id,`SCT221-${stud_id}`);
             else 
                 toast.error('Scanning Period Has Elapsed!')
         }
