@@ -58,7 +58,6 @@ export default function ScanStudentQrCode({unit_id}:{unit_id:string}) {
 
     const handleError = (error: Error) => {
         console.error('QR Scan Error: ', error)
-        toast.error(`QR Scan Error: ${error}`)
     };
 
   return (
