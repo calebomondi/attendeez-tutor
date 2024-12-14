@@ -55,7 +55,7 @@ const QRScanner: React.FC<QRScannerProps> = ({
                 (result, error) => {
                     if (result) {
                         onScan(result.getText());
-                        stopScanning();
+                        //stopScanning();
                     }
                     if (error) {
                         if (
