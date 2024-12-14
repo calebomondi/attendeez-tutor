@@ -48,7 +48,7 @@ export default function ScanStudentQrCode({unit_id}:{unit_id:string}) {
     const handleScan = (result: string) => {
         if (result.length > 0) {
             const jsonObj = JSON.parse(result)
-            const stud_id = jsonObj.id[0]
+            const stud_id = jsonObj[0]
             if (isWithinTimeLimit(data.end_time)) 
                 uploadStudent(unit_id,`SCT221-${stud_id}`);
             else 
@@ -57,8 +57,8 @@ export default function ScanStudentQrCode({unit_id}:{unit_id:string}) {
     };
 
     const handleError = (error: Error) => {
-        console.error('QR Scan Error:', error)
-        toast.error(`${error}`)
+        console.error('QR Scan Error: ', error)
+        toast.error(`QR Scan Error: ${error}`)
     };
 
   return (
