@@ -3,18 +3,36 @@ import apiService from "../../services/apiService"
 import { AttendedStats } from "../../types"
 import NavBar from "../navbar/navbar";
 
+import { useCookies } from "react-cookie";
+
 export default function Attendance() {
     const url = new URL(window.location.href);
     const params = new URLSearchParams(url.search);
     const units = params.get('unit');
 
     const [data, setData] = useState<AttendedStats[]>([])
+    const [cookies, setCookie] = useCookies([`attendance_${units}`])
 
     useEffect(() => {
+        //Try to load data from cookie
+        const cookieData = cookies[`attendance_${units}`]
+        if (cookieData) {
+            console.log(`cookieData-Attendance: ${cookieData}`)
+            setData(cookieData)
+        }
+
         const fetchData = async () => {
             try {
                 const result = await apiService.geAttendanceStats(String(units))
                 setData(result)
+
+                // Store the new data in cookie
+                setCookie(`attendance_${units}`, result, {
+                    path: '/attendance',
+                    maxAge: 3600, // Cookie expires in 1 hour
+                    secure: true,
+                    sameSite: 'strict'
+                });
             } catch (error) {
                 console.log(`Error: ${error}`)
             }
