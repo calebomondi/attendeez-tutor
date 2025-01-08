@@ -2,7 +2,7 @@ import { useEffect, useState } from "react";
 import apiService from "../../services/apiService"
 import { ClassEndTime } from "../../types"
 
-import { ToastContainer, toast } from "react-toastify";
+import { toast } from "react-toastify";
 import 'react-toastify/dist/ReactToastify.css';
 
 import QRScanner from "./zxing";
@@ -61,8 +61,7 @@ export default function ScanStudentQrCode({unit_id}:{unit_id:string}) {
     };
 
   return (
-    <div className="flex flex-col justify-center items-center w-full bg-base-200 my-5 border border-teal-500 rounded-lg">
-        <ToastContainer />
+    <div className={`flex flex-col justify-center items-center w-full bg-base-200 my-5 ${data.session_end && `border border-teal-500 rounded-lg`}`}>
         {
             data.session_end && isWithinTimeLimit(data.end_time) && (
                 <div className="w-full h-full">

@@ -3,7 +3,7 @@ import apiService from "../../services/apiService"
 import { SessionStarted,MyClassesToday } from "../../types"
 import ConfirmTodaysClass from "./confirmclass"
 
-import { ToastContainer, toast } from 'react-toastify';
+import { toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 
 export default function TodaysClasses({teacher_id, unit_id} : {teacher_id : string,unit_id : string}) {
@@ -73,7 +73,6 @@ export default function TodaysClasses({teacher_id, unit_id} : {teacher_id : stri
 
   return (
     <>
-        <ToastContainer />
         {
             data.length > 0 ? (
                 data.map((item,index) => (
@@ -160,7 +159,7 @@ export default function TodaysClasses({teacher_id, unit_id} : {teacher_id : stri
                 <div className="flex justify-center">
                     {
                         !classToday ? (
-                            <p>You Have No Class Today</p>
+                            <p>You Have No Sessions Today</p>
                         ) : (
                             <span className="loading loading-infinity loading-lg"></span>
                         )

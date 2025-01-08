@@ -1,9 +1,11 @@
 import Header from './components/header/header'
+import { ToastContainer } from 'react-toastify'
 
 function App() {
   return (
     <>
-       <Header />
+      <ToastContainer />
+      <Header />
     </>
   )
 }
