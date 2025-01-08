@@ -4,6 +4,8 @@ import apiService from "../../services/apiService";
 import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 
+import logo from  '/attendeez.png'
+
 export default function NavBar() {
     const {user,signOut} = useAuth()
 
@@ -63,7 +65,13 @@ export default function NavBar() {
             </div>
         </div>
         <div className="navbar-center">
-            <Link to = "/" className='text-3xl'>Attendeez</Link>
+            <Link to = "/" className='text-3xl'>
+                <img 
+                    src={logo} 
+                    alt="" 
+                    className="w-12"
+                />
+            </Link>
         </div>
         <div className="navbar-end">
             <div className="dropdown dropdown-end">
