@@ -46,8 +46,8 @@ export default function TodaysClasses({teacher_id, unit_id} : {teacher_id : stri
         const response = await apiService.putEndClassSession(unit_id)
         if(response.success) {
             toast.success(response.message)
+            hideStart()
         } 
-        hideStart()
     }
 
     const hideStart = async () => {
