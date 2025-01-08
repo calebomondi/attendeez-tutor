@@ -27,7 +27,11 @@ export default function TodaysClasses({teacher_id, unit_id} : {teacher_id : stri
 
         fetchData()
 
-    },[teacher_id]);
+        hideStart()
+
+        sessStart()
+
+    },[teacher_id, end, before, started]);
 
     const handleStartClass = async () => {
         const response = await apiService.postStartClassSession(unit_id)
@@ -57,7 +61,6 @@ export default function TodaysClasses({teacher_id, unit_id} : {teacher_id : stri
             setBefore(check.session_end)
 
     }
-    hideStart()
 
     const sessStart = async () => {
         const start = await apiService.sessionStarted(unit_id)
@@ -65,7 +68,6 @@ export default function TodaysClasses({teacher_id, unit_id} : {teacher_id : stri
         if(start.id > 0)
             setStarted(start)
     }
-    sessStart()
 
     let classToday = false
     if(data.length > 0) 
@@ -95,14 +97,14 @@ export default function TodaysClasses({teacher_id, unit_id} : {teacher_id : stri
                                                         disabled={!end}
                                                         onClick={() => handleStartClass()}
                                                     >
-                                                        Start Class
+                                                        Start Session
                                                     </button>
                                                     <button 
                                                         className="btn btn-error text-xl md:text-lg text-white"
                                                         disabled={end}
                                                         onClick={() => handleEndClass()}
                                                     >
-                                                        End Class
+                                                        End Session
                                                     </button>
                                                 </div>
                                             </>
@@ -130,14 +132,14 @@ export default function TodaysClasses({teacher_id, unit_id} : {teacher_id : stri
                                                         disabled={!end}
                                                         onClick={() => handleStartClass()}
                                                     >
-                                                        Start Class
+                                                        Start Session
                                                     </button>
                                                     <button 
                                                         className="btn btn-error text-xl md:text-lg text-white"
                                                         disabled={end}
                                                         onClick={() => handleEndClass()}
                                                     >
-                                                        End Class
+                                                        End Session
                                                     </button>
                                                 </div>
                                             </>
