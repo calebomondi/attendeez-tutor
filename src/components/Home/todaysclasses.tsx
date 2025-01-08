@@ -47,6 +47,7 @@ export default function TodaysClasses({teacher_id, unit_id} : {teacher_id : stri
         if(response.success) {
             toast.success(response.message)
         } 
+        hideStart()
     }
 
     const hideStart = async () => {
