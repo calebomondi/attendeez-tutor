@@ -9,6 +9,9 @@
     "lint": "eslint .",
     "preview": "vite preview"
   },
+  "author": "Kaleb Mokua",
+  "license": "ISC",
+  "description": "ATTENDEEZ Tutor's Application",
   "dependencies": {
     "@supabase/auth-ui-react": "^0.4.7",
     "@supabase/auth-ui-shared": "^0.1.8",
