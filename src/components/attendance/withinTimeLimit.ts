@@ -18,7 +18,7 @@ function isWithinTimeLimit(targetTime: string): boolean {
     console.log(`diff----------------------------------> ${diff}`)
     
     // Check if difference is less than or equal to 1 minute (60000 milliseconds)
-    return diff <= 60000 * 5;
+    return diff <= 60000 * 10;
 }
 
 export default isWithinTimeLimit
