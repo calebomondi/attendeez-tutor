@@ -11,8 +11,6 @@ import { AuthProvider } from '../auth/authProvider';
 import { ProtectedRoute } from '../auth/protectedRoute';
 import { useAuth } from '../auth/useAuth';
 
-import { CookiesProvider } from 'react-cookie';
-
 const AuthenticatedApp: React.FC = () => {
   const { user } = useAuth();
   const email: string = user?.email || 'macharianancy@jkuat.ac.ke';
@@ -81,9 +79,7 @@ export default function Header() {
   return (
     <Router>
       <AuthProvider>
-        <CookiesProvider>
-          <AuthenticatedApp />
-        </CookiesProvider>
+        <AuthenticatedApp />
       </AuthProvider>
     </Router>
   );
