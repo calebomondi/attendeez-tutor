@@ -13,8 +13,10 @@ export default function Home({teacher_id,unit_id}:{teacher_id:string,unit_id:str
           <h2 className="flex justify-center my-2 py-2 text-xl font-semibold">My Class</h2>
           <AttendanceProgress unit_id={unit_id}/>
           <h2 className="flex justify-center my-2 py-2 text-xl font-semibold">Today's Sessions</h2>
-          <TodaysClasses teacher_id={teacher_id} unit_id={unit_id}/>
-          <ScanStudentQrCode unit_id={unit_id}/>
+          <div className="dark:bg-base-200 bg-white p-2 rounded-lg">
+            <TodaysClasses teacher_id={teacher_id} unit_id={unit_id}/>
+            <ScanStudentQrCode unit_id={unit_id}/>
+          </div>
         </div>
       </main>
     </>

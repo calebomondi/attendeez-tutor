@@ -4,8 +4,6 @@ import apiService from "../../services/apiService";
 import { TeacherInfo } from "../../types";
 import { useState, useEffect } from "react";
 
-import { useCookies } from "react-cookie";
-
 export default function MyAccount() {
   const {user} = useAuth();
   const email: string = user?.email || 'nah@notworking.com';
@@ -22,36 +20,27 @@ export default function MyAccount() {
       }
     ]
   });
-  const [cookies, setCookie] = useCookies([`teacherInfo_${email}`])
 
   useEffect(() => {
-    //Try to load data from cookie
-    const cookieData = cookies[`teacherInfo_${email}`]
-    if (cookieData) {
-      console.log(`cookieData-Profile: ${cookieData}`)
-      setData(cookieData)
+    //load from ls
+    const ls_data = localStorage.getItem('tutor_profile')
+    if (ls_data) {
+        setData(JSON.parse(ls_data))
     }
 
+    //from db
     const fetchData = async () => {
       try {
         const result = await apiService.getTeacherInfo(email)
         setData(result)
 
-        // Store the new data in cookie
-        setCookie(`teacherInfo_${email}`, result, {
-          path: '/profile',
-          maxAge: 3600, // Cookie expires in 1 hour
-          secure: true,
-          sameSite: 'strict'
-        });
+        localStorage.setItem('tutor_profile', JSON.stringify(result))
       } catch (error) {
         console.log(`Error: ${error}`)
       }
     }
     fetchData()
-  }, [email]);
-
-  console.log(`teacher: ${data}`)
+  }, [email])
   
   return (
     <>
@@ -60,7 +49,7 @@ export default function MyAccount() {
         <div className="card bg-base-100 w-96 shadow-xl m-5 border border-teal-500">
           <figure>
             <img
-              src="https://pbs.twimg.com/profile_images/1846119592659496960/sXAZAvFd_400x400.jpg"
+              src="https://img.daisyui.com/images/stock/photo-1534528741775-53994a69daeb.webp"
               alt="Profile Picture" />
           </figure>
           <div className="card-body">
@@ -70,7 +59,7 @@ export default function MyAccount() {
               <div className="badge badge-success">{data.units[0].semester}</div>
             </h2>
             <h3 className="font-semibold">{data.name}</h3>
-            <p>/{user?.email}/</p>
+            <p>{user?.email}</p>
           </div>
         </div>
       </main>

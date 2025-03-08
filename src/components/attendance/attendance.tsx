@@ -1,9 +1,7 @@
 import { useEffect, useState } from "react"
 import apiService from "../../services/apiService"
-import { AttendedStats } from "../../types"
+import { AttendedStats } from "../../types";
 import NavBar from "../navbar/navbar";
-
-import { useCookies } from "react-cookie";
 
 export default function Attendance() {
     const url = new URL(window.location.href);
@@ -11,28 +9,21 @@ export default function Attendance() {
     const units = params.get('unit');
 
     const [data, setData] = useState<AttendedStats[]>([])
-    const [cookies, setCookie] = useCookies([`attendance_${units}`])
 
     useEffect(() => {
-        //Try to load data from cookie
-        const cookieData = cookies[`attendance_${units}`]
-        if (cookieData) {
-            console.log(`cookieData-Attendance: ${cookieData}`)
-            setData(cookieData)
+        //load from ls
+        const ls_data = localStorage.getItem('class_attendance')
+        if (ls_data) {
+            setData(JSON.parse(ls_data))
         }
 
+        //load from db
         const fetchData = async () => {
             try {
                 const result = await apiService.geAttendanceStats(String(units))
                 setData(result)
 
-                // Store the new data in cookie
-                setCookie(`attendance_${units}`, result, {
-                    path: '/attendance',
-                    maxAge: 3600, // Cookie expires in 1 hour
-                    secure: true,
-                    sameSite: 'strict'
-                });
+                localStorage.setItem('class_attendance', JSON.stringify(result))
             } catch (error) {
                 console.log(`Error: ${error}`)
             }
@@ -50,11 +41,11 @@ export default function Attendance() {
   return (
     <>
         <NavBar />
-        <main>
+        <main className="">
+        <h2 className="text-lg font-semibold my-1 flex justify-center">{units} Attendance Report</h2>
             {
                 data.length > 0 ? (
                     <div className="overflow-x-auto">
-                        <h2 className="text-lg font-semibold my-1 flex justify-center">{units} Attendance Report</h2>
                         <table className="table table-xs table-pin-rows table-pin-cols">
                             <thead>
                                 <tr className="bg-teal-600">

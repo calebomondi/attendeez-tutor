@@ -159,10 +159,10 @@ export default function TodaysClasses({teacher_id, unit_id} : {teacher_id : stri
                     </div>
                 ))
             ) : (
-                <div className="flex justify-center">
+                <div className="flex justify-center text-lg my-5 font-semibold">
                     {
                         !classToday ? (
-                            <p>You Have No Sessions Today</p>
+                            <p className="text-warning">You Have No Sessions Today</p>
                         ) : (
                             <span className="loading loading-infinity loading-lg"></span>
                         )
