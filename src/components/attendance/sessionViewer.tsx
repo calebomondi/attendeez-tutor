@@ -1,20 +1,13 @@
 import React, { useState, useEffect } from 'react';
-
-// Define TypeScript interfaces for our data
-interface Session {
-  id: number;
-  unit_id: string;
-  session_date: string;
-  students: string[];
-}
+import { SessionData } from '../../types';
 
 interface SessionStudentViewerProps {
-  enhancedSessions: Session[];
+  enhancedSessions: SessionData[];
 }
 
 const SessionStudentViewer: React.FC<SessionStudentViewerProps> = ({ enhancedSessions }) => {
   const [selectedSessionId, setSelectedSessionId] = useState<number | null>(null);
-  const [selectedSession, setSelectedSession] = useState<Session | null>(null);
+  const [selectedSession, setSelectedSession] = useState<SessionData | null>(null);
 
   // Set initial selected session if data is available
   useEffect(() => {
@@ -38,11 +31,16 @@ const SessionStudentViewer: React.FC<SessionStudentViewerProps> = ({ enhancedSes
   };
 
   if (!enhancedSessions || enhancedSessions.length === 0) {
-    return <div className="p-4 text-gray-500">No session data available</div>;
+    return (
+      <div className='dark:bg-base-200 bg-white m-2 rounded-md p-2'>
+        <h2 className="text-xl font-bold my-2 text-center">Session Attendance</h2>
+        <p className='p-4 text-lg text-center text-amber-500'>No session data available</p>
+      </div>
+    )
   }
 
   return (
-    <div className="w-full max-w-4xl mx-auto p-4">
+    <div className="w-full max-w-4xl mx-auto m-2 p-2">
       <div className="shadow rounded-lg p-6">
         <h2 className="text-xl font-bold mb-4">Session Attendance</h2>
         
@@ -73,7 +71,7 @@ const SessionStudentViewer: React.FC<SessionStudentViewerProps> = ({ enhancedSes
                   {selectedSession.students.map((studentId, index) => (
                     <div key={studentId} className="p-3">
                       <p className="flex justify-between">
-                        <span className="font-medium text-gray-600">#{index + 1}</span>
+                        <span className="font-medium text-gray-600">{index + 1}.</span>
                         <span>{studentId}</span>
                       </p>
                     </div>

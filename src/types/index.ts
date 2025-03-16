@@ -118,3 +118,10 @@ export type SessionStarted = {
   "id": number,
   "session_end": boolean
 }
+
+export interface SessionData {
+  id: number;
+  unit_id: string;
+  session_date: string;
+  students: string[];
+}
