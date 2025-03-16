@@ -23,7 +23,6 @@ export default function Session () {
       const response = await apiService.getSessionStats(String(units))
       if(response) {
         setSessions(response)
-        console.log(`==> ${JSON.stringify(response)}`)
         localStorage.setItem('class_sessions', JSON.stringify(response))
       }
     }

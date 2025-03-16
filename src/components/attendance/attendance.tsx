@@ -72,10 +72,10 @@ export default function Attendance() {
                         </table>
                     </div>
                 ) : (
-                    <div className="flex justify-center mt-5">
+                    <div className="flex justify-center">
                         {
                             !attendance ? (
-                                <p>No Attendance Records Yet!</p>
+                                <p className='text-amber-500 text-lg'>No Attendance Records Available</p>
                             ) : (
                                 <span className="loading loading-infinity loading-lg"></span>
                             )
