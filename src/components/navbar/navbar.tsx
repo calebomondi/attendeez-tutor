@@ -30,8 +30,12 @@ export default function NavBar() {
 
     const navigate = useNavigate()
 
-    const handleClick = async () => {
+    const handleClick =  () => {
         navigate(`/attendance?unit=${unit}`)
+    }
+
+    const handleSession =  () => {
+        navigate(`/session-attendance?unit=${unit}`)
     }
 
   return (
@@ -57,6 +61,9 @@ export default function NavBar() {
                 className="menu menu-sm dropdown-content bg-base-100 rounded-box z-[1] mt-3 w-52 p-2 shadow">
                 <li>
                     <Link to="/" className='text-lg'>Home</Link>
+                </li>
+                <li onClick={handleSession}>
+                    <p className='text-lg'>Sessions</p>
                 </li>
                 <li onClick={handleClick}>
                     <p className='text-lg'>All Attendance</p>

@@ -7,6 +7,7 @@ import Home from '../Home/home';
 import Attendance from '../attendance/attendance';
 import Authenticate from '../auth/authenticate';
 import MyAccount from '../myaccount/myaccount';
+import Session from '../attendance/session';
 import { AuthProvider } from '../auth/authProvider';
 import { ProtectedRoute } from '../auth/protectedRoute';
 import { useAuth } from '../auth/useAuth';
@@ -66,6 +67,14 @@ const AuthenticatedApp: React.FC = () => {
         element={
           <ProtectedRoute>
             <MyAccount />
+          </ProtectedRoute>
+        } 
+      />
+      <Route 
+        path="/session-attendance" 
+        element={
+          <ProtectedRoute>
+            <Session />
           </ProtectedRoute>
         } 
       />
